@@ -2,6 +2,7 @@ package com.pgjson.hibernate.restrictions;
 
 import com.pgjson.hibernate.expressions.BetweenJSONBExpression;
 import com.pgjson.hibernate.expressions.InJSONBExpression;
+import com.pgjson.hibernate.expressions.NullJSONBExpression;
 import com.pgjson.hibernate.expressions.SimpleJSONBExpression;
 import com.pgjson.postgresql.domain.jsonquery.model.CastType;
 import org.hibernate.criterion.MatchMode;
@@ -86,4 +87,13 @@ public class JSONBRestrictions {
 	public static InJSONBExpression notIn(String property, String jsonPath, List<Object> values, CastType castType) {
 		return new InJSONBExpression(property, jsonPath, values).cast(castType).not();
 	}
+
+	public static NullJSONBExpression isNull(String property, String jsonPath) {
+		return new NullJSONBExpression(property, jsonPath, true);
+	}
+
+	public static NullJSONBExpression isNotNull(String property, String jsonPath) {
+		return new NullJSONBExpression(property, jsonPath, false);
+	}
+
 }

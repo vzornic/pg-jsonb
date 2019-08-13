@@ -30,6 +30,7 @@ public class SimpleJSONBExpression extends BasicJSONBExpression {
 
 	public SimpleJSONBExpression ignoreCase() {
 		ignoreCase = true;
+		this.value.lowerCase();
 		return this;
 	}
 
@@ -55,7 +56,7 @@ public class SimpleJSONBExpression extends BasicJSONBExpression {
 
 	@Override
 	public TypedValue[] getTypedValues(Criteria criteria, CriteriaQuery criteriaQuery) throws HibernateException {
-		return new TypedValue[] {value.getTypedValue()};
+		return new TypedValue[] { value.getTypedValue()};
 	}
 
 }

@@ -29,6 +29,7 @@ public class ParametrizedValue {
 	 */
 	private Object value;
 	private CastType castType;
+	private boolean lowerCase;
 
 
 	public ParametrizedValue(String key, Object value) {
@@ -48,8 +49,10 @@ public class ParametrizedValue {
 		return value;
 	}
 
-	public ParametrizedValue toLowerCase() {
-		value = value.toString().toLowerCase();
+	public ParametrizedValue lowerCase() {
+		if (value instanceof String) {
+			this.value = this.value.toString().toLowerCase();
+		}
 		return this;
 	}
 
