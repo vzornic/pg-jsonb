@@ -17,7 +17,7 @@ public class InJsonCondition implements JsonQueryFragment {
 
 	private JsonProperty jsonProperty;
 	private List<ParametrizedValue> values = new ArrayList<>();
-	private String operator = " IN ";
+	private String operator = " IN";
 	private boolean lowerCase = false;
 	private boolean ignoreValues = false;
 
@@ -59,7 +59,7 @@ public class InJsonCondition implements JsonQueryFragment {
 	}
 
 	public InJsonCondition not() {
-		operator = " NOT IN ";
+		operator = " NOT IN";
 		return this;
 	}
 
