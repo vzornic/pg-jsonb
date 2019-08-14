@@ -8,9 +8,10 @@
     <artifactId>pgjsonb</artifactId>
     <version>0.0.1</version>
 
-    <name>PG jsonb</name>
+    <name>${project.groupId}:${project.artifactId}&lt;</name>
     <description>Easy use of PostgreSQL json data types with Hibernate or JDBC</description>
     <url>https://github.com/vzornic/pg-jsonb</url>
+    <packaging>jar</packaging>
 
     <organization>
         <name>com.vzornic</name>
@@ -24,7 +25,7 @@
 
     <licenses>
         <license>
-            <name>MIT</name>
+            <name>MIT License</name>
             <url>https://github.com/vzornic/pg-jsonb/blob/master/LICENSE</url>
             <distribution>repo</distribution>
         </license>
