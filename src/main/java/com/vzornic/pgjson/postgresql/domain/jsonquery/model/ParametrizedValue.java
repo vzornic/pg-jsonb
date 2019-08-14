@@ -1,6 +1,5 @@
 package com.vzornic.pgjson.postgresql.domain.jsonquery.model;
 
-import com.sun.istack.internal.Nullable;
 import org.hibernate.engine.spi.TypedValue;
 import org.hibernate.type.BooleanType;
 import org.hibernate.type.DoubleType;
@@ -21,7 +20,6 @@ public class ParametrizedValue {
 	/**
 	 * Key for parameter. Might be null
 	 */
-	@Nullable
 	private String key;
 
 	/**
