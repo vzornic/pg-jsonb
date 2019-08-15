@@ -28,8 +28,15 @@ This lib can be used either along with Hibernate Criterion API ([Restrictions](h
 
 ### Installing
 
-//TODO
+Add to your pom.xml
 
+```
+<dependency>
+    <groupId>com.vzornic.pgjsonb</groupId>
+    <artifactId>pgjsonb</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
 
 ## Running the tests
 
