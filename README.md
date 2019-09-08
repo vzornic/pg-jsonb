@@ -6,7 +6,40 @@ Java library easy querying [jsonb](https://www.postgresql.org/docs/9.4/datatype-
 
 This lib can be used either along with Hibernate Criterion API ([Restrictions](https://docs.jboss.org/hibernate/core/3.3/api/org/hibernate/criterion/Restrictions.html)) or with native JDBC queries.
 
-#### Hibernate example
+#### Hibernate CriteriaBuilder API example
+
+In order to use pg-jsonb lib with CriteriaBuilder API it is required to use one from the provided Dialects that could be found at `com.vzornic.pgjson.hibernate.dialect`.
+
+For example:
+`hibernate.dialect=com.vzornic.pgjson.hibernate.dialect.PostgresJsonSQL94Dialect`
+
+
+
+```
+    CriteriaBuilder cb = session.getCriteriaBuilder();
+    CriteriaQuery<User> cr = cb.createQuery(User.class);
+    
+    Root<User> root = cr.from(User.class); // Get root object
+    // Instantiate JSONRootImpl with RootImpl. This is required in order to build json properties
+    JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
+		
+    cr.where(cb.equal(jsonRoot.get("json_column", "jsondata.parent[0].name"), "Jane Doe"));
+
+```
+
+As you can see in example, json expressions are build using `JSONRootImpl<X>`. 
+
+Methods `get(String attributeName, String jsonPath, Class<Y> type)` and `get(String attributeName, String jsonPath)` will build a json paths. If type is not specified, String is used by default.
+
+API is using javascript notation to build paths, i.e:
+
+```
+jsondata.parent.nested.object.array[1]
+```
+
+Criteria Builder API supports nesting to the 10th level.
+
+#### Hibernate Criterion API example
 
 ```
   Criteria criteria = ... // Get Criteria object
