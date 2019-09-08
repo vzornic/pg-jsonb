@@ -1,4 +1,4 @@
-package com.vzornic.pgjson.hibernate.expressions;
+package com.vzornic.pgjson.hibernate.legacy.expressions;
 
 import com.vzornic.pgjson.postgresql.domain.jsonquery.implementation.conditions.BetweenJsonCondition;
 import com.vzornic.pgjson.postgresql.domain.jsonquery.model.CastType;

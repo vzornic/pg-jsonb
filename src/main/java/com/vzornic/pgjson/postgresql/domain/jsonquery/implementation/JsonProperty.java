@@ -25,11 +25,13 @@ public class JsonProperty implements JsonQueryFragment {
 
 	private JsonIteratorMode iteratorMode = JsonIteratorMode.DEFAUTL;
 	private final String column;
+	private String alias;
 	private List<JsonPath> paths = new ArrayList<>();
 	private CastType castType;
 	private boolean asJson = false;
 	private boolean ignoreValues = false;
 	private boolean randomKeyValues = false;
+	private boolean hqlInternalSyntax = false;
 	private List<ParametrizedValue> parametrizedValues = new ArrayList<>();
 
 	/**
@@ -72,6 +74,9 @@ public class JsonProperty implements JsonQueryFragment {
 	 */
 	@Override
 	public String toSqlString() {
+		if (hqlInternalSyntax) {
+			return toHQLString();
+		}
 		StringBuilder result = new StringBuilder();
 		if (castType != null) {
 			result.append("cast(");
@@ -118,6 +123,47 @@ public class JsonProperty implements JsonQueryFragment {
 			}
 		}
 
+		if (castType != null) {
+			result.append(" as ").append(castType.getCastType()).append(")");
+		}
+
+		return result.toString();
+	}
+
+	/**
+	 * Creates hql fragment for given property.
+	 *
+	 */
+	private String toHQLString() {
+		StringBuilder result = new StringBuilder();
+		if (castType != null) {
+			result.append("cast(");
+		}
+
+		result.append("internal_json_text_")
+				.append(paths.size())
+				.append("(")
+				.append(alias)
+				.append(".")
+				.append(column);
+		Iterator<JsonPath> it = paths.iterator();
+
+		while (it.hasNext()) {
+			JsonPath path = it.next();
+			boolean appendSingleQuotes = JsonPath.PathType.STRING == path.getType() && !ignoreValues;
+			result.append(",");
+			if (appendSingleQuotes) {
+				result.append("'");
+			}
+
+			result.append(path.getKey());
+
+			if (appendSingleQuotes) {
+				result.append("'");
+			}
+		}
+
+		result.append(")");
 		if (castType != null) {
 			result.append(" as ").append(castType.getCastType()).append(")");
 		}
@@ -188,6 +234,26 @@ public class JsonProperty implements JsonQueryFragment {
 	 */
 	public JsonProperty ignoreValues() {
 		this.ignoreValues = true;
+		return this;
+	}
+
+	/**
+	 * Register alias.
+	 *
+	 * @return
+	 */
+	public JsonProperty alias(String alias) {
+		this.alias = alias;
+		return this;
+	}
+
+	/**
+	 * Turns on funcion to use internal HQL syntax in order to build query.
+	 *
+	 * @return
+	 */
+	public JsonProperty hql() {
+		this.hqlInternalSyntax = true;
 		return this;
 	}
 

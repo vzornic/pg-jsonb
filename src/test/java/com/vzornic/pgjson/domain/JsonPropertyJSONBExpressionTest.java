@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author vedadzornic
  */
-public class JsonPropertyTest {
+public class JsonPropertyJSONBExpressionTest {
 
 	@org.junit.Test
 	public void testCreate() throws Exception {
