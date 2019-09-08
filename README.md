@@ -67,7 +67,7 @@ Add to your pom.xml
 <dependency>
     <groupId>com.vzornic.pgjsonb</groupId>
     <artifactId>pgjsonb</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
