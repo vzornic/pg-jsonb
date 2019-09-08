@@ -1,9 +1,10 @@
-package com.vzornic.pgjson.hibernate.expressions;
+package com.vzornic.pgjson.hibernate.legacy.expressions;
 
-import com.vzornic.pgjson.User;
-import com.vzornic.pgjson.hibernate.restrictions.JSONBRestrictions;
-import com.vzornic.pgjson.postgresql.domain.jsonquery.model.CastType;
+
 import com.vzornic.pgjson.TestUtils;
+import com.vzornic.pgjson.User;
+import com.vzornic.pgjson.hibernate.legacy.restrictions.JSONBRestrictions;
+import com.vzornic.pgjson.postgresql.domain.jsonquery.model.CastType;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -17,7 +18,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
-public class JSONBExpressionTest {
+public class JSONBCriterionExpressionTest {
 
 	@Test
 	public void testFirstLevelEqual() {
@@ -25,7 +26,6 @@ public class JSONBExpressionTest {
 
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(JSONBRestrictions.eq("data", "email", "johnwoodard@xleen.com"));
-
 		List<User> result = criteria.list();
 		assertEquals(1, result.size());
 		assertEquals(5, result.get(0).getId().intValue());

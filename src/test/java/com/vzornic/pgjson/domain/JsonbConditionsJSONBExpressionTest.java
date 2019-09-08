@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class JsonbConditionsTest {
+public class JsonbConditionsJSONBExpressionTest {
 
 	@Test
 	public void testSimpleConditionEquals() {

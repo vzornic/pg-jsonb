@@ -14,7 +14,7 @@ public class TestUtils {
 	public synchronized static Session getSession() {
 		if (session == null) {
 			Properties properties = new Properties();
-			properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+			properties.put("hibernate.dialect", "com.vzornic.pgjson.hibernate.dialect.PostgresJsonSQLDialect");
 			properties.put("hibernate.hbm2ddl.auto", "update");
 			properties.put("hibernate.show_sql", "true");
 			properties.put("hibernate.connection.driver_class", "org.postgresql.Driver");

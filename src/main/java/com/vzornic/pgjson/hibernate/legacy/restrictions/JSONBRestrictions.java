@@ -1,9 +1,9 @@
-package com.vzornic.pgjson.hibernate.restrictions;
+package com.vzornic.pgjson.hibernate.legacy.restrictions;
 
-import com.vzornic.pgjson.hibernate.expressions.BetweenJSONBExpression;
-import com.vzornic.pgjson.hibernate.expressions.InJSONBExpression;
-import com.vzornic.pgjson.hibernate.expressions.NullJSONBExpression;
-import com.vzornic.pgjson.hibernate.expressions.SimpleJSONBExpression;
+import com.vzornic.pgjson.hibernate.legacy.expressions.BetweenJSONBExpression;
+import com.vzornic.pgjson.hibernate.legacy.expressions.InJSONBExpression;
+import com.vzornic.pgjson.hibernate.legacy.expressions.NullJSONBExpression;
+import com.vzornic.pgjson.hibernate.legacy.expressions.SimpleJSONBExpression;
 import com.vzornic.pgjson.postgresql.domain.jsonquery.model.CastType;
 import org.hibernate.criterion.MatchMode;
 
