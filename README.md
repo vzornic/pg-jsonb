@@ -4,7 +4,7 @@ Java library easy querying [jsonb](https://www.postgresql.org/docs/9.4/datatype-
 
 ## Getting Started
 
-This lib can be used either along with Hibernate Criterion API ([Restrictions](https://docs.jboss.org/hibernate/core/3.3/api/org/hibernate/criterion/Restrictions.html)) or with native JDBC queries.
+This lib can be used either along with Hibernate CriteriaBuilder API ([CriteriaBuilder](https://docs.jboss.org/hibernate/jpa/2.1/api/javax/persistence/criteria/CriteriaBuilder.html)), Hibernate Criterion API ([Restrictions](https://docs.jboss.org/hibernate/core/3.3/api/org/hibernate/criterion/Restrictions.html)) or with native JDBC queries.
 
 #### Hibernate CriteriaBuilder API example
 
