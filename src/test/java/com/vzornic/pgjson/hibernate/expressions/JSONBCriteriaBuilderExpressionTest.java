@@ -29,9 +29,9 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
 
-		cr.where(cb.equal(jsonRoot.get("data", "email"), "johnwoodard@xleen.com"));
+		cr.where(cb.equal(jsonRoot.get( "email"), "johnwoodard@xleen.com"));
 		Query<User> query = session.createQuery(cr);
 
 		List<User> result = query.list();
@@ -46,9 +46,9 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
 
-		cr.where(cb.equal(jsonRoot.get("data", "email"), jsonRoot.get("data", "email")));
+		cr.where(cb.equal(jsonRoot.get( "email"), jsonRoot.get( "email")));
 		Query<User> query = session.createQuery(cr);
 
 		List<User> result = query.list();
@@ -62,9 +62,9 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
 
-		cr.where(cb.equal(jsonRoot.get("data", "parents.father.name"), "Brooke Holt"));
+		cr.where(cb.equal(jsonRoot.get( "parents.father.name"), "Brooke Holt"));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -80,9 +80,9 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
 
-		cr.where(cb.equal(jsonRoot.get("data", "related[0].name"), "Carpenter Erickson"));
+		cr.where(cb.equal(jsonRoot.get( "related[0].name"), "Carpenter Erickson"));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -98,9 +98,9 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
 		
-		cr.where(cb.equal(jsonRoot.get("data", "age", Integer.class), 30));
+		cr.where(cb.equal(jsonRoot.get( "age", Integer.class), 30));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -122,8 +122,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.equal(cb.lower(jsonRoot.get("data", "parents.father.name")), "brOOke hOlT".toLowerCase()));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.equal(cb.lower(jsonRoot.get( "parents.father.name")), "brOOke hOlT".toLowerCase()));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -139,8 +139,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.notEqual(jsonRoot.get("data", "parents.father.name"), "Brooke Holt"));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.notEqual(jsonRoot.get( "parents.father.name"), "Brooke Holt"));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -159,8 +159,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.notEqual((cb.lower(jsonRoot.get("data", "parents.father.name"))), "BrooKE holt".toLowerCase()));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.notEqual((cb.lower(jsonRoot.get( "parents.father.name"))), "BrooKE holt".toLowerCase()));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -179,8 +179,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(jsonRoot.get("data", "parents.father.name"), MatchMode.ANYWHERE.toMatchString("ooke ")));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(jsonRoot.get( "parents.father.name"), MatchMode.ANYWHERE.toMatchString("ooke ")));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -196,8 +196,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(jsonRoot.get("data", "parents.father.name"), MatchMode.END.toMatchString("Holt")));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(jsonRoot.get( "parents.father.name"), MatchMode.END.toMatchString("Holt")));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -213,8 +213,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(jsonRoot.get("data", "parents.father.name"), MatchMode.START.toMatchString("Brooke")));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(jsonRoot.get( "parents.father.name"), MatchMode.START.toMatchString("Brooke")));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -229,20 +229,20 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(jsonRoot.get("data", "parents.father.name"), MatchMode.END.toMatchString("Brooke")));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(jsonRoot.get( "parents.father.name"), MatchMode.END.toMatchString("Brooke")));
 		Query<User> query = session.createQuery(cr);
 
 		List<User> result = query.list();
 		assertEquals(0, result.size());
 
 		query = session.createQuery(cr);
-		cr.where(cb.like(jsonRoot.get("data", "parents.father.name"), MatchMode.START.toMatchString("Holt")));
+		cr.where(cb.like(jsonRoot.get( "parents.father.name"), MatchMode.START.toMatchString("Holt")));
 		result = query.list();
 		assertEquals(0, result.size());
 
 		query = session.createQuery(cr);
-		cr.where(cb.like(jsonRoot.get("data", "parents.father.name"), MatchMode.ANYWHERE.toMatchString("XxX")));
+		cr.where(cb.like(jsonRoot.get( "parents.father.name"), MatchMode.ANYWHERE.toMatchString("XxX")));
 		result = query.list();
 		assertEquals(0, result.size());
 	}
@@ -254,8 +254,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(cb.lower(jsonRoot.get("data", "parents.father.name")), MatchMode.ANYWHERE.toMatchString("oOKe ").toLowerCase()));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(cb.lower(jsonRoot.get( "parents.father.name")), MatchMode.ANYWHERE.toMatchString("oOKe ").toLowerCase()));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -271,8 +271,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(cb.lower(jsonRoot.get("data", "parents.father.name")), MatchMode.END.toMatchString("HOLT").toLowerCase()));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(cb.lower(jsonRoot.get( "parents.father.name")), MatchMode.END.toMatchString("HOLT").toLowerCase()));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -288,8 +288,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(cb.lower(jsonRoot.get("data", "parents.father.name")), MatchMode.START.toMatchString("BroOKe").toLowerCase()));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(cb.lower(jsonRoot.get( "parents.father.name")), MatchMode.START.toMatchString("BroOKe").toLowerCase()));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -304,20 +304,20 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.like(cb.lower(jsonRoot.get("data", "parents.father.name")), MatchMode.END.toMatchString("BroOKe")));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.like(cb.lower(jsonRoot.get( "parents.father.name")), MatchMode.END.toMatchString("BroOKe")));
 		Query<User> query = session.createQuery(cr);
 
 		List<User> result = query.list();
 		assertEquals(0, result.size());
 
 		query = session.createQuery(cr);
-		cr.where(cb.like(cb.lower(jsonRoot.get("data", "parents.father.name")), MatchMode.START.toMatchString("HoLT")));
+		cr.where(cb.like(cb.lower(jsonRoot.get( "parents.father.name")), MatchMode.START.toMatchString("HoLT")));
 		result = query.list();
 		assertEquals(0, result.size());
 
 		query = session.createQuery(cr);
-		cr.where(cb.like(cb.lower(jsonRoot.get("data", "parents.father.name")), MatchMode.ANYWHERE.toMatchString("xxx")));
+		cr.where(cb.like(cb.lower(jsonRoot.get( "parents.father.name")), MatchMode.ANYWHERE.toMatchString("xxx")));
 		result = query.list();
 		assertEquals(0, result.size());
 	}
@@ -329,8 +329,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.gt(jsonRoot.get("data", "age", Integer.class), 30));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.gt(jsonRoot.get( "age", Integer.class), 30));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -352,8 +352,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.ge(jsonRoot.get("data", "age", Integer.class), 30));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.ge(jsonRoot.get( "age", Integer.class), 30));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -379,8 +379,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.lt(jsonRoot.get("data", "age", Integer.class), 26));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.lt(jsonRoot.get( "age", Integer.class), 26));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -402,8 +402,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.le(jsonRoot.get("data", "age", Integer.class), 26));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.le(jsonRoot.get( "age", Integer.class), 26));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -426,8 +426,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.between(jsonRoot.get("data", "age", Integer.class), 25, 29));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.between(jsonRoot.get( "age", Integer.class), 25, 29));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -450,8 +450,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.not(cb.between(jsonRoot.get("data", "age", Integer.class), 18, 31)));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.not(cb.between(jsonRoot.get( "age", Integer.class), 18, 31)));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -473,8 +473,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(jsonRoot.get("data", "age", Integer.class).in( Arrays.asList(30, 22, 21)));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(jsonRoot.get( "age", Integer.class).in( Arrays.asList(30, 22, 21)));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -499,8 +499,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.not(jsonRoot.get("data", "age", Integer.class).in(Arrays.asList(30, 22, 21, 32, 29, 28))));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.not(jsonRoot.get( "age", Integer.class).in(Arrays.asList(30, 22, 21, 32, 29, 28))));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -522,8 +522,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.isNull(jsonRoot.get("data", "nonExistingField")));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.isNull(jsonRoot.get( "nonExistingField")));
 
 		Query<User> query = session.createQuery(cr);
 
@@ -538,8 +538,8 @@ public class JSONBCriteriaBuilderExpressionTest {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<User> cr = cb.createQuery(User.class);
 		Root<User> root = cr.from(User.class);
-		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
-		cr.where(cb.isNotNull(jsonRoot.get("data", "age", Integer.class)));
+		JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "data");
+		cr.where(cb.isNotNull(jsonRoot.get( "age", Integer.class)));
 
 		Query<User> query = session.createQuery(cr);
 

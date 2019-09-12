@@ -8,11 +8,12 @@ package com.vzornic.pgjson.postgresql.domain.jsonquery.implementation;
  */
 public enum JsonIteratorMode {
 
+
 	/**
-	 * This is default json walk operator.
-	 * If this notation is turned on, query will use '@>' operator.
-	 * This operator should always be used because it is only one
-	 * which use index.
+	 * If this notation is used paths will be separated and query will apply
+	 * hashtag json notation #>.
+	 * Example: root.child.final { json column } #> '{root,child,final}'
+	 * <p>
 	 */
 	DEFAUTL,
 
@@ -20,14 +21,5 @@ public enum JsonIteratorMode {
 	 * If this notation is used, jsonPath will be separated with arrow ( -> )
 	 * ex: root.child.final = 'root'->'child'->>'final'
 	 */
-	ARROW_ITERATOR_MODE,
-
-	/**
-	 * If this notation is used paths will be separated and query will apply
-	 * hashtag json notation #>.
-	 * Example: root.child.final { json column } #> '{root,child,final}'
-	 * <p>
-	 * NOTE: This mode is currently not supported !!!
-	 */
-	HASHTAG_ITERATOR_MODE
+	ARROW_ITERATOR_MODE
 }
