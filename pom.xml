@@ -6,7 +6,7 @@
 
     <groupId>com.vzornic.pgjsonb</groupId>
     <artifactId>pgjsonb</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <name>${project.groupId}:${project.artifactId}&lt;</name>
     <description>Easy use of PostgreSQL json data types with Hibernate or JDBC</description>
@@ -76,6 +76,11 @@
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

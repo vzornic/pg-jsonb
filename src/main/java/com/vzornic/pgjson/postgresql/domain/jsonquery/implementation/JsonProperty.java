@@ -4,6 +4,7 @@ import com.vzornic.pgjson.postgresql.domain.jsonquery.model.CastType;
 import com.vzornic.pgjson.postgresql.domain.jsonquery.model.JsonPath;
 import com.vzornic.pgjson.postgresql.domain.jsonquery.JsonQueryFragment;
 import com.vzornic.pgjson.postgresql.domain.jsonquery.model.ParametrizedValue;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -74,67 +75,24 @@ public class JsonProperty implements JsonQueryFragment {
 	 */
 	@Override
 	public String toSqlString() {
-		if (hqlInternalSyntax) {
-			return toHQLString();
-		}
-		StringBuilder result = new StringBuilder();
-		if (castType != null) {
-			result.append("cast(");
-		}
-		result.append(column);
-		Iterator<JsonPath> it = paths.iterator();
-
-		if (!paths.isEmpty()) {
-			result.append("->");
-		}
-
-		while (it.hasNext()) {
-			JsonPath path = it.next();
-			boolean appendSingleQuotes = JsonPath.PathType.STRING == path.getType() && !ignoreValues;
-
-			if (!asJson && !it.hasNext()) {
-				result.append(">");
+		if (iteratorMode == JsonIteratorMode.ARROW_ITERATOR_MODE) {
+			if (hqlInternalSyntax) {
+				return toHQLStringArrowMode();
 			}
-
-			if (appendSingleQuotes) {
-				result.append("'");
+			return toSqlStringArrowMode();
+		} else {
+			if (hqlInternalSyntax) {
+				return toHQLStringDefault();
 			}
-
-			if (ignoreValues) {
-				ParametrizedValue value = null;
-				if (randomKeyValues) {
-					String randomKey = UUID.randomUUID().toString();
-					value = new ParametrizedValue(randomKey, path.getKey());
-				} else {
-					value = new ParametrizedValue(path.getKey());
-				}
-				this.parametrizedValues.add(value);
-				result.append(":").append(value.getKey());
-			} else {
-				result.append(path.getKey());
-			}
-
-			if (appendSingleQuotes) {
-				result.append("'");
-			}
-
-			if (it.hasNext()) {
-				result.append("->");
-			}
+			return toSqlStringDefault();
 		}
-
-		if (castType != null) {
-			result.append(" as ").append(castType.getCastType()).append(")");
-		}
-
-		return result.toString();
 	}
 
 	/**
 	 * Creates hql fragment for given property.
 	 *
 	 */
-	private String toHQLString() {
+	private String toHQLStringArrowMode() {
 		StringBuilder result = new StringBuilder();
 		if (castType != null) {
 			result.append("cast(");
@@ -164,6 +122,145 @@ public class JsonProperty implements JsonQueryFragment {
 		}
 
 		result.append(")");
+		if (castType != null) {
+			result.append(" as ").append(castType.getCastType()).append(")");
+		}
+
+		return result.toString();
+	}
+
+	/**
+	 * Creates hql fragment for given property.
+	 *
+	 */
+	private String toHQLStringDefault() {
+		StringBuilder result = new StringBuilder();
+		if (castType != null) {
+			result.append("cast(");
+		}
+
+		result.append("internal_json_text_default")
+				.append("(")
+				.append(alias)
+				.append(".")
+				.append(column)
+				.append(",")
+				.append("'{");
+		Iterator<JsonPath> it = paths.iterator();
+
+		while (it.hasNext()) {
+			JsonPath path = it.next();
+			result.append(path.getKey());
+
+			if (it.hasNext()) {
+				result.append(",");
+			}
+		}
+
+		result.append("}')");
+		if (castType != null) {
+			result.append(" as ").append(castType.getCastType()).append(")");
+		}
+
+		return result.toString();
+	}
+
+
+	private String toSqlStringDefault() {
+		StringBuilder result = new StringBuilder();
+		if (castType != null) {
+			result.append("cast(");
+		}
+		result.append(column);
+		Iterator<JsonPath> it = paths.iterator();
+
+		if (!paths.isEmpty()) {
+			if (asJson) {
+				result.append("#>");
+			} else {
+				result.append("#>>");
+			}
+		}
+		result.append("'{");
+		while (it.hasNext()) {
+			JsonPath path = it.next();
+
+			if (ignoreValues) {
+				ParametrizedValue value = null;
+				if (randomKeyValues) {
+					String randomKey = RandomStringUtils.randomAlphabetic(5);
+					value = new ParametrizedValue(randomKey, path.getKey());
+				} else {
+					value = new ParametrizedValue(path.getKey());
+				}
+				this.parametrizedValues.add(value);
+				result.append(":").append(value.getKey());
+			} else {
+				result.append(path.getKey());
+			}
+
+
+			if (it.hasNext()) {
+				result.append(",");
+			}
+		}
+
+		result.append("}'");
+
+		if (castType != null) {
+			result.append(" as ").append(castType.getCastType()).append(")");
+		}
+
+		return result.toString();
+	}
+
+	private String toSqlStringArrowMode() {
+		StringBuilder result = new StringBuilder();
+		if (castType != null) {
+			result.append("cast(");
+		}
+		result.append(column);
+		Iterator<JsonPath> it = paths.iterator();
+
+		if (!paths.isEmpty()) {
+			result.append("->");
+		}
+
+		while (it.hasNext()) {
+			JsonPath path = it.next();
+			boolean appendSingleQuotes = JsonPath.PathType.STRING == path.getType() && !ignoreValues;
+
+			if (!asJson && !it.hasNext()) {
+				result.append(">");
+			}
+
+			if (appendSingleQuotes) {
+				result.append("'");
+			}
+
+			if (ignoreValues) {
+				ParametrizedValue value = null;
+				if (randomKeyValues) {
+					String randomKey = RandomStringUtils.randomAlphabetic(5);
+					value = new ParametrizedValue(randomKey, path.getKey());
+				} else {
+					value = new ParametrizedValue(path.getKey());
+				}
+				this.parametrizedValues.add(value);
+				result.append(":").append(value.getKey());
+			} else {
+				result.append(path.getKey());
+			}
+
+			if (appendSingleQuotes) {
+				result.append("'");
+			}
+
+			if (it.hasNext()) {
+				result.append("->");
+			}
+		}
+
 		if (castType != null) {
 			result.append(" as ").append(castType.getCastType()).append(")");
 		}
@@ -280,6 +377,11 @@ public class JsonProperty implements JsonQueryFragment {
 	 */
 	public JsonProperty cast(CastType castType) {
 		this.castType = castType;
+		return this;
+	}
+
+	public JsonProperty mode(JsonIteratorMode mode) {
+		this.iteratorMode = mode;
 		return this;
 	}
 
