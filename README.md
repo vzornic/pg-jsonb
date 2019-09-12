@@ -16,28 +16,28 @@ For example:
 
 
 ```
+    //JPA/Hibernate stuff
     CriteriaBuilder cb = session.getCriteriaBuilder();
     CriteriaQuery<User> cr = cb.createQuery(User.class);
-    
-    Root<User> root = cr.from(User.class); // Get root object
+    Root<User> root = cr.from(User.class); 
+
     // Instantiate JSONRootImpl with RootImpl. This is required in order to build json properties
-    JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root);
+    JSONRootImpl<User> jsonRoot = new JSONRootImpl<User>((RootImpl<User>) root, "json_column_name");
 		
-    cr.where(cb.equal(jsonRoot.get("json_column", "jsondata.parent[0].name"), "Jane Doe"));
+    //query json data
+    cr.where(cb.equal(jsonRoot.get("jsondata.parent[0].name"), "Jane Doe"));
 
 ```
 
 As you can see in example, json expressions are build using `JSONRootImpl<X>`. 
 
-Methods `get(String attributeName, String jsonPath, Class<Y> type)` and `get(String attributeName, String jsonPath)` will build a json paths. If type is not specified, String is used by default.
+Methods `get(String jsonPath, Class<Y> type)` and `get(String jsonPath)` will build a json paths. If type is not specified, String is used by default.
 
 API is using javascript notation to build paths, i.e:
 
 ```
 jsondata.parent.nested.object.array[1]
 ```
-
-Criteria Builder API supports nesting to the 10th level.
 
 #### Hibernate Criterion API example
 
@@ -67,7 +67,7 @@ Add to your pom.xml
 <dependency>
     <groupId>com.vzornic.pgjsonb</groupId>
     <artifactId>pgjsonb</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
