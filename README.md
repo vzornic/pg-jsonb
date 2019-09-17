@@ -6,6 +6,8 @@ Java library easy querying [jsonb](https://www.postgresql.org/docs/9.4/datatype-
 
 This lib can be used either along with Hibernate CriteriaBuilder API ([CriteriaBuilder](https://docs.jboss.org/hibernate/jpa/2.1/api/javax/persistence/criteria/CriteriaBuilder.html)), Hibernate Criterion API ([Restrictions](https://docs.jboss.org/hibernate/core/3.3/api/org/hibernate/criterion/Restrictions.html)) or with native JDBC queries.
 
+More on how to use PostgreSQL JSON data types along with this lib you can read on [my blog](http://vzornic.com/postgresql/postgres/json/jsonb/hibernate/jpa/2019/09/13/postgresql-json-hibernate.html).
+
 #### Hibernate CriteriaBuilder API example
 
 In order to use pg-jsonb lib with CriteriaBuilder API it is required to use one from the provided Dialects that could be found at `com.vzornic.pgjson.hibernate.dialect`.
