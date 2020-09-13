@@ -42,10 +42,4 @@ public class SingularJSONAttributePath<X>  extends SingularAttributePath<X> {
 			return attribute.getFullPath();
 		}
 	}
-
-	@Override
-	public String renderProjection(RenderingContext renderingContext) {
-		return super.renderProjection(renderingContext);
-	}
-
 }

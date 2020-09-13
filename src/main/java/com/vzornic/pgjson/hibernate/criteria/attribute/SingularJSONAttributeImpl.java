@@ -2,9 +2,10 @@ package com.vzornic.pgjson.hibernate.criteria.attribute;
 
 import com.vzornic.pgjson.postgresql.domain.jsonquery.implementation.JsonProperty;
 import com.vzornic.pgjson.postgresql.domain.jsonquery.model.CastType;
-import org.hibernate.metamodel.internal.AbstractAttribute;
-import org.hibernate.metamodel.internal.AbstractManagedType;
-import org.hibernate.metamodel.internal.BasicTypeImpl;
+import org.hibernate.metamodel.model.domain.internal.AbstractAttribute;
+import org.hibernate.metamodel.model.domain.internal.AbstractManagedType;
+import org.hibernate.metamodel.model.domain.internal.BasicTypeImpl;
+import org.hibernate.metamodel.model.domain.spi.SimpleTypeDescriptor;
 
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.SingularAttribute;
@@ -22,18 +23,21 @@ public class SingularJSONAttributeImpl<X, Y> extends AbstractAttribute<X,Y> impl
 	private final boolean isOptional;
 	private final Type<Y> attributeType;
 	private final JsonProperty jsonPath;
+	private final Class<Y> javaType;
 
 	public SingularJSONAttributeImpl(Attribute<X,Y> attribute, String jsonPath, Class<Y> type) {
-		super( attribute.getName(), type, (AbstractManagedType) attribute.getDeclaringType(),
-				attribute.getJavaMember(), attribute.getPersistentAttributeType());
+		super((AbstractManagedType) attribute.getDeclaringType(),attribute.getName(),
+				attribute.getPersistentAttributeType(),
+				new BasicTypeImpl<Y>(type, Type.PersistenceType.BASIC), attribute.getJavaMember());
 		this.isOptional = true;
 		this.attributeType = new BasicTypeImpl<Y>(type, Type.PersistenceType.BASIC);
 		this.jsonPath = new JsonProperty(getName(), jsonPath).hql();
+		this.javaType = type;
 
 		if (!String.class.isAssignableFrom(getJavaType())) {
 			if (Float.class.isAssignableFrom(getJavaType())) {
 				this.jsonPath.cast(CastType.NUMERIC);
-	 		} else if (Double.class.isAssignableFrom(getJavaType())) {
+			} else if (Double.class.isAssignableFrom(getJavaType())) {
 				this.jsonPath.cast(CastType.DOUBLE_PRECISION);
 			} else if (Long.class.isAssignableFrom(getJavaType())) {
 				this.jsonPath.cast(CastType.BIGINT);
@@ -79,6 +83,11 @@ public class SingularJSONAttributeImpl<X, Y> extends AbstractAttribute<X,Y> impl
 		return attributeType;
 	}
 
+	@Override
+	public Class<Y> getJavaType() {
+		return javaType;
+	}
+
 	/**
 	 * JSON attribute cannot be association
 	 *
@@ -111,5 +120,10 @@ public class SingularJSONAttributeImpl<X, Y> extends AbstractAttribute<X,Y> impl
 
 	public String getFullPath(String alias) {
 		return jsonPath.alias(alias).toSqlString();
+	}
+
+	@Override
+	public SimpleTypeDescriptor<?> getKeyGraphType() {
+		return null;
 	}
 }
